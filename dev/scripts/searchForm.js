@@ -1,4 +1,5 @@
 import React from "react";
+import PriceResult from "./priceResult"
 import axios from 'axios';
 
 const NumberFormat = require("react-number-format");
@@ -7,9 +8,11 @@ class SearchForm extends React.Component{
     constructor(){
         super();
         this.state = {
+            cryUrl: "https://www.cryptocompare.com/",
             currentSearch: "",
             priceResults: [],
             cryImage: [],
+
         }
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -21,17 +24,13 @@ class SearchForm extends React.Component{
         axios.get(`https://min-api.cryptocompare.com/data/pricemulti?fsyms=${param}&tsyms=CAD`)
             .then(res => {
                 const cryptos = res.data;
-                console.log(cryptos);
+                // console.log(cryptos);
                 this.setState({
                     priceResults: cryptos
                 })
             })
         }
 
-
-        //need to change this. based on my param search filter the results so that it only finds what was searched 
-
-        // if the name matches the param, make the key name equal to that name and then target the image 
     searchImage(param) {
         axios.get(`https://min-api.cryptocompare.com/data/all/coinlist`)
             .then(res => {
@@ -40,24 +39,23 @@ class SearchForm extends React.Component{
 
                 for (let key in cryImage) {
                     if(param===key){
-                    imageArray.push(cryImage[key])
+                    imageArray.push(cryImage[key].ImageUrl)
                 }
             }
-                console.log(imageArray);
+            console.log(imageArray);
 
             this.setState({
                 cryImage: imageArray
             })
         })
     }
-
    
     handleChange(e){
         const currentSearchValue = e.target.value;
         this.setState({
             currentSearch: currentSearchValue
         })
-        console.log(currentSearchValue);
+        // console.log(currentSearchValue);
     }
 
     handleSubmit(e){
@@ -91,10 +89,16 @@ class SearchForm extends React.Component{
                             </div>
                         </form>
                     </div>
+                    
+                    {/* put this into a component using props and then have another propped component that will render the image */}
+
                     {Object.keys(this.state.priceResults).map((key) => (
                         <div className="cryptoContainer">
                             <span className="title">{key}</span>
                             <span className="value"><NumberFormat value={this.state.priceResults[key].CAD} displayType={"text"} decimalprecision={2} thousandSeparator={true} prefix={"$"} /></span>
+                            <div>
+                                <img src={`https://www.cryptocompare.com/${this.state.cryImage}`} />
+                            </div>
                         </div>
                     ))}
                 </div>
