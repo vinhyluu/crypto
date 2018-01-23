@@ -1,8 +1,8 @@
 import React from "react";
 // import PriceResult from "./priceResult"
 import axios from 'axios';
+import NumberFormat from 'react-number-format';
 
-const NumberFormat = require("react-number-format");
 
 class SearchForm extends React.Component{
     constructor(){
@@ -20,19 +20,38 @@ class SearchForm extends React.Component{
         this.searchImage = this.searchImage.bind(this);
     }
 
+    // cryPrice(param){
+    //     axios.get(`https://min-api.cryptocompare.com/data/pricemulti?fsyms=${param}&tsyms=CAD`)
+    //         .then(res => {
+    //             const cryptos = res.data;
+    //             const price = []
+    //             console.log(cryptos);
+
+    //             for(let title in cryptos){
+    //                 price.push(cryptos[title].CAD);
+    //             }
+    //             this.setState({
+    //                 priceResults: price
+    //             })
+    //         })
+    //     }
+
     cryPrice(param){
-        axios.get(`https://min-api.cryptocompare.com/data/pricemulti?fsyms=${param}&tsyms=CAD`)
+        axios.get(`https://api.coinmarketcap.com/v1/ticker/?limit=0`)
             .then(res => {
                 const cryptos = res.data;
                 const price = []
                 console.log(cryptos);
 
                 for(let title in cryptos){
-                    price.push(cryptos[title].CAD);
+                    console.log(cryptos[title].symbol);
+
+                    if(cryptos[title].name == param || cryptos[title].symbol == param){
+                        price.push(cryptos[title].price_usd);       
+                    }
                 }
 
-                
-
+                console.log(price);
                 this.setState({
                     priceResults: price
                 })
@@ -61,10 +80,11 @@ class SearchForm extends React.Component{
 
                 for (let key in cryData) {
                     if (param === key || param === cryData[key].CoinName) {
-                        console.log(cryData[key])
+                        // console.log(cryData[key])
                         coinTitle.push(cryData[key].FullName)
                     }
                 }
+                
 
 
             this.setState({
@@ -116,15 +136,15 @@ class SearchForm extends React.Component{
                     
                     {/* put this into a component using props and then have another propped component that will render the image */}
 
-                    {/* {Object.keys(this.state.priceResults).map((key) => ( */}
+                    {Object.keys(this.state.priceResults).map((key) => (
                         <div className="cryptoContainer">
                             <span className="title">{this.state.coinTitle}</span>
-                            <span className="value">{this.state.priceResults}</span>
+                            <span className="price"><NumberFormat value={this.state.priceResults[key]} displayType={'text'} thousandSeparator={true} prefix={'$'} isNumericString={true} decimalprecision={2}/> </span>
                             <div>
                                 <img src={`https://www.cryptocompare.com/${this.state.cryImage}`} />
                             </div>
                         </div>
-                    {/* ))} */}
+                    ))}
                 </div>
             </div>
         )
