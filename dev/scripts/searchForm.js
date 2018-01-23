@@ -1,5 +1,5 @@
 import React from "react";
-import PriceResult from "./priceResult"
+// import PriceResult from "./priceResult"
 import axios from 'axios';
 
 const NumberFormat = require("react-number-format");
@@ -8,10 +8,10 @@ class SearchForm extends React.Component{
     constructor(){
         super();
         this.state = {
-            cryUrl: "https://www.cryptocompare.com/",
             currentSearch: "",
             priceResults: [],
             cryImage: [],
+            coinTitle: [],
 
         }
         this.handleChange = this.handleChange.bind(this);
@@ -24,9 +24,17 @@ class SearchForm extends React.Component{
         axios.get(`https://min-api.cryptocompare.com/data/pricemulti?fsyms=${param}&tsyms=CAD`)
             .then(res => {
                 const cryptos = res.data;
-                // console.log(cryptos);
+                const price = []
+                console.log(cryptos);
+
+                for(let title in cryptos){
+                    price.push(cryptos[title].CAD);
+                }
+
+                
+
                 this.setState({
-                    priceResults: cryptos
+                    priceResults: price
                 })
             })
         }
@@ -34,18 +42,34 @@ class SearchForm extends React.Component{
     searchImage(param) {
         axios.get(`https://min-api.cryptocompare.com/data/all/coinlist`)
             .then(res => {
-                const cryImage = res.data.Data;
+                const cryData = res.data.Data;
                 const imageArray = []
+                const coinTitle = []
 
-                for (let key in cryImage) {
-                    if(param===key){
-                    imageArray.push(cryImage[key].ImageUrl)
+                // console.log(cryData);
+
+                for (let key in cryData) {
+                    // for(let title in cryData[key]){
+                    //     console.log(cryData[key]);
+                        // console.log(title);
+                        // console.log(key);
+                        // console.log(cryData[key].CoinName)
+                    if (param === key || param === cryData[key].CoinName){
+                        imageArray.push(cryData[key].ImageUrl)
+                    }
+                }            
+
+                for (let key in cryData) {
+                    if (param === key || param === cryData[key].CoinName) {
+                        console.log(cryData[key])
+                        coinTitle.push(cryData[key].FullName)
+                    }
                 }
-            }
-            console.log(imageArray);
+
 
             this.setState({
-                cryImage: imageArray
+                cryImage: imageArray,
+                coinTitle
             })
         })
     }
@@ -72,7 +96,7 @@ class SearchForm extends React.Component{
             <div>
                 <div>
                     <header>
-                        <h1>CrytpoAnalyze</h1>
+                        <h1>CryptoAnalyze</h1>
                     </header>
                     <div className="formContainer">
                         <form action="" onSubmit={this.handleSubmit}>
@@ -92,18 +116,15 @@ class SearchForm extends React.Component{
                     
                     {/* put this into a component using props and then have another propped component that will render the image */}
 
-                    {Object.keys(this.state.priceResults).map((key) => (
+                    {/* {Object.keys(this.state.priceResults).map((key) => ( */}
                         <div className="cryptoContainer">
-                            <span className="title">{key}</span>
-                            <span className="value"><NumberFormat value={this.state.priceResults[key].CAD} displayType={"text"} decimalprecision={2} thousandSeparator={true} prefix={"$"} /></span>
+                            <span className="title">{this.state.coinTitle}</span>
+                            <span className="value">{this.state.priceResults}</span>
                             <div>
                                 <img src={`https://www.cryptocompare.com/${this.state.cryImage}`} />
                             </div>
                         </div>
-                    ))}
-                </div>
-
-                <div>
+                    {/* ))} */}
                 </div>
             </div>
         )
