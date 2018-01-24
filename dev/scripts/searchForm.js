@@ -41,17 +41,19 @@ class SearchForm extends React.Component{
             .then(res => {
                 const cryptos = res.data;
                 const price = []
-                console.log(cryptos);
+                // console.log(cryptos);
 
                 for(let title in cryptos){
-                    console.log(cryptos[title].symbol);
+                    // console.log(cryptos[title].symbol);
 
-                    if(cryptos[title].name == param || cryptos[title].symbol == param){
+                    const cryptoTitle = cryptos[title].name.toUpperCase();
+                    const cryptoSymbol = cryptos[title].symbol.toUpperCase();
+                    if(cryptoTitle == param || cryptos[title].symbol == param){
                         price.push(cryptos[title].price_usd);       
                     }
+                    console.log(cryptoTitle);
                 }
 
-                console.log(price);
                 this.setState({
                     priceResults: price
                 })
@@ -68,25 +70,20 @@ class SearchForm extends React.Component{
                 // console.log(cryData);
 
                 for (let key in cryData) {
-                    // for(let title in cryData[key]){
-                    //     console.log(cryData[key]);
-                        // console.log(title);
-                        // console.log(key);
-                        // console.log(cryData[key].CoinName)
-                    if (param === key || param === cryData[key].CoinName){
+                    const coinImgTitle = cryData[key].CoinName.toUpperCase();
+                    if (param === key || param === coinImgTitle){
                         imageArray.push(cryData[key].ImageUrl)
                     }
                 }            
 
                 for (let key in cryData) {
-                    if (param === key || param === cryData[key].CoinName) {
-                        // console.log(cryData[key])
+                    const coinImgTitle = cryData[key].CoinName.toUpperCase();
+
+                    if (param === key || param === coinImgTitle) {
                         coinTitle.push(cryData[key].FullName)
                     }
                 }
                 
-
-
             this.setState({
                 cryImage: imageArray,
                 coinTitle
@@ -95,11 +92,11 @@ class SearchForm extends React.Component{
     }
    
     handleChange(e){
-        const currentSearchValue = e.target.value;
+        const currentSearchValue = e.target.value.toUpperCase();
         this.setState({
             currentSearch: currentSearchValue
         })
-        // console.log(currentSearchValue);
+        console.log(currentSearchValue);
     }
 
     handleSubmit(e){
@@ -139,7 +136,7 @@ class SearchForm extends React.Component{
                     {Object.keys(this.state.priceResults).map((key) => (
                         <div className="cryptoContainer">
                             <span className="title">{this.state.coinTitle}</span>
-                            <span className="price"><NumberFormat value={this.state.priceResults[key]} displayType={'text'} thousandSeparator={true} prefix={'$'} isNumericString={true} decimalprecision={2}/> </span>
+                            <span className="price"><NumberFormat value={this.state.priceResults[key]} displayType={"text"} decimalScale={2} thousandSeparator={true} prefix={"$"}/> </span>
                             <div>
                                 <img src={`https://www.cryptocompare.com/${this.state.cryImage}`} />
                             </div>
