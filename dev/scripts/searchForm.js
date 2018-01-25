@@ -12,7 +12,7 @@ class SearchForm extends React.Component{
             priceResults: [],
             cryImage: [],
             coinTitle: [],
-
+            marketCap: "",
         }
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -20,8 +20,22 @@ class SearchForm extends React.Component{
         this.searchImage = this.searchImage.bind(this);
     }
 
+  
+    componentDidMount(){
+        axios.get(`https://api.coinmarketcap.com/v1/global/?convert=CAD`)
+            .then(res => {
+                const market = res.data.total_market_cap_cad;
+                console.log(market);   
+    
+            this.setState({
+                marketCap: market
+            })
+        })
+    }
+    
+    //get percentage changed data
     cryPrice(param){
-        axios.get(`https://api.coinmarketcap.com/v1/ticker/?limit=0`)
+        axios.get(`https://api.coinmarketcap.com/v1/ticker/?convert=CAD&limit=0`)
             .then(res => {
                 const cryptos = res.data;
                 const price = []
@@ -35,11 +49,10 @@ class SearchForm extends React.Component{
                     }
                 }
 
-
                 this.setState({
                     priceResults: price
                 })
-
+                //function that will check if an array has any value. if yes don't do anything, if no do something
                 function isEmpty(obj) {
                     for (const key in obj) {
                         if (obj.hasOwnProperty(key))
@@ -49,7 +62,7 @@ class SearchForm extends React.Component{
                 }
 
                 if(isEmpty(price)){
-                    swal("Sorry! That coin doesn't exist. Please search again.");
+                    swal("Sorry!", "That coin doesn't exist. Please try again.", "warning");
                 }
             })
         }
@@ -61,8 +74,6 @@ class SearchForm extends React.Component{
                 const cryData = res.data.Data;
                 const imageArray = []
                 const coinTitle = []
-
-                // console.log(cryData);
 
                 for (let key in cryData) {
                     const coinImgTitle = cryData[key].CoinName.toUpperCase();
@@ -98,8 +109,6 @@ class SearchForm extends React.Component{
         e.preventDefault();
         this.cryPrice(this.state.currentSearch);
         this.searchImage(this.state.currentSearch);
-
-        
         this.setState({
             currentSearch: ""
         })
@@ -112,6 +121,12 @@ class SearchForm extends React.Component{
                     <header>
                         <h1>CryptoAnalyze</h1>
                     </header>
+
+                    <div className="marketCapContainer">
+                        <h2>Total Market Cap</h2>
+                        <span className="marketCapNumber"><NumberFormat value={this.state.marketCap} displayType={"text"} decimalScale={2} thousandSeparator={true} prefix={"$"} /></span>
+                    </div>
+
                     <div className="formContainer">
                         <form action="" onSubmit={this.handleSubmit}>
                             <div className="leftCoin">
