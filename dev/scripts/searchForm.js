@@ -1,8 +1,8 @@
 import React from "react";
 // import PriceResult from "./priceResult"
 import axios from 'axios';
+import swal from 'sweetalert';
 import NumberFormat from 'react-number-format';
-
 
 class SearchForm extends React.Component{
     constructor(){
@@ -20,45 +20,40 @@ class SearchForm extends React.Component{
         this.searchImage = this.searchImage.bind(this);
     }
 
-    // cryPrice(param){
-    //     axios.get(`https://min-api.cryptocompare.com/data/pricemulti?fsyms=${param}&tsyms=CAD`)
-    //         .then(res => {
-    //             const cryptos = res.data;
-    //             const price = []
-    //             console.log(cryptos);
-
-    //             for(let title in cryptos){
-    //                 price.push(cryptos[title].CAD);
-    //             }
-    //             this.setState({
-    //                 priceResults: price
-    //             })
-    //         })
-    //     }
-
     cryPrice(param){
         axios.get(`https://api.coinmarketcap.com/v1/ticker/?limit=0`)
             .then(res => {
                 const cryptos = res.data;
                 const price = []
-                // console.log(cryptos);
 
                 for(let title in cryptos){
-                    // console.log(cryptos[title].symbol);
-
                     const cryptoTitle = cryptos[title].name.toUpperCase();
                     const cryptoSymbol = cryptos[title].symbol.toUpperCase();
-                    if(cryptoTitle == param || cryptos[title].symbol == param){
+                    
+                    if(cryptoTitle === param || cryptoSymbol === param){
                         price.push(cryptos[title].price_usd);       
                     }
-                    console.log(cryptoTitle);
                 }
+
 
                 this.setState({
                     priceResults: price
                 })
+
+                function isEmpty(obj) {
+                    for (const key in obj) {
+                        if (obj.hasOwnProperty(key))
+                            return false;
+                    }
+                    return true;
+                }
+
+                if(isEmpty(price)){
+                    swal("Sorry! That coin doesn't exist. Please search again.");
+                }
             })
         }
+        
 
     searchImage(param) {
         axios.get(`https://min-api.cryptocompare.com/data/all/coinlist`)
@@ -103,6 +98,8 @@ class SearchForm extends React.Component{
         e.preventDefault();
         this.cryPrice(this.state.currentSearch);
         this.searchImage(this.state.currentSearch);
+
+        
         this.setState({
             currentSearch: ""
         })
