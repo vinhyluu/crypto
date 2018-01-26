@@ -20,8 +20,7 @@ class SearchForm extends React.Component{
         this.cryPrice = this.cryPrice.bind(this);
         this.searchImage = this.searchImage.bind(this);
     }
-
-  
+ 
     componentDidMount(){
         axios.get(`https://api.coinmarketcap.com/v1/global/?convert=CAD`)
             .then(res => {
@@ -33,8 +32,7 @@ class SearchForm extends React.Component{
             })
         })
     }
-    
-    //get percentage changed data
+
     cryPrice(param){
         axios.get(`https://api.coinmarketcap.com/v1/ticker/?convert=CAD&limit=0`)
             .then(res => {
@@ -53,11 +51,12 @@ class SearchForm extends React.Component{
                         percentChange.push(cryptos[title].percent_change_24h);
                     }
                 }
+
                 this.setState({
                     priceResults: price,
                     percentChange 
                 })
-                //function that will check if an array has any value. if yes don't do anything, if no do something
+
                 function isEmpty(obj) {
                     for (const key in obj) {
                         if (obj.hasOwnProperty(key))
@@ -119,6 +118,7 @@ class SearchForm extends React.Component{
         })
     }
 
+
     render(){
         return(
             <div>
@@ -173,7 +173,7 @@ class SearchForm extends React.Component{
                                 <div className="coinColumn">
                                     <h3>% Change (24 hours)</h3>
                                     <div className="coinContent">
-                                        <span className="coinText">{this.state.percentChange}%</span> 
+                                    <span className="coinText" style={this.state.percentChange < 0 ? {color: " red"} : {color: "green"}}>{this.state.percentChange}%</span> 
                                     </div> 
                                 </div>      
                             </div>
