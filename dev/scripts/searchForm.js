@@ -166,7 +166,7 @@ class SearchForm extends React.Component{
                                 <div className="coinColumn">    
                                     <h3>Price</h3>
                                     <div className="coinContent">
-                                        <span className="coinText"><NumberFormat value={this.state.priceResults[key]} displayType={"text"} decimalScale={2} thousandSeparator={true} prefix={"$"} /></span>
+                                        <span className="coinText"><NumberFormat value={this.state.priceResults[key]} displayType={"text"} decimalScale={3} thousandSeparator={true} prefix={"$"} /></span>
                                     </div>
                                 </div>
 

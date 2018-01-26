@@ -41,6 +41,7 @@ html{
   background: rgb(214, 235, 238);
   margin: 0;
   color: rgb(147, 146, 146);
+  font-size: 1.5rem;
 }
 
 .coinContent{
@@ -116,10 +117,129 @@ input[type=text]{
   color: red;
 }
 
-.redText{
-  color: red;
+//media queries
+@media (max-width : 1390px){
+  .cryptoContainer{
+    width: 75%;
+  }
 }
 
-.greenText{
-  color: green;
+@media (max-width : 1245px){
+  .cryptoContainer{
+    width: 80%;
+  }
+}
+
+@media (max-width : 1120px){
+  .cryptoContainer{
+    width: 90%;
+  }
+}
+
+@media (max-width : 875px){
+  .marketCapNumber{
+    font-size: 7.5rem;
+  }
+}
+
+
+@media (max-width : 985px){
+  .cryptoContainer{
+    width: 100%;
+  }
+}
+
+@media (max-width : 805px){
+  .marketCapNumber{
+    font-size: 7rem;
+  }
+}
+
+@media (max-width : 875px){
+  .wrapper2{
+    width: 85%;
+  }
+}
+
+@media (max-width : 775px){
+  .wrapper2{
+    width: 95%;
+  }
+}
+
+@media (max-width : 578px){
+  .marketCapNumber{
+    font-size: 6.5rem;
+  }
+}
+
+@media (max-width : 537px){
+  .marketCapNumber{
+    font-size: 6rem;
+  }
+}
+
+@media (max-width : 665px){
+  .wrapper2{
+    width: 99%;
+  }
+}
+
+@media (max-width : 602px){
+  .cryptoContainer{
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+    width: 100%;
+  }
+
+  .coinColumn{
+    width: 100%;
+    padding: 0;
+  }
+
+  .coinContent{
+    position: none;
+    top: none;
+    transform: none;
+    padding: 10px 0 10px 0;
+  }
+
+  .coinColumn h3{
+    font-size: 1.5rem;
+  }
+
+  .marketCapNumber{
+    font-size: 5.5rem;
+  }
+}
+
+@media (max-width : 449px){
+  .marketCapNumber{
+    font-size: 5rem;
+  }
+
+  input[type=text]{
+    width: 420px; 
+    font-size: 1.8rem;
+  }
+}
+
+@media (max-width : 419px){
+  input[type=text]{
+    width: 400px;
+    font-size: 1.7rem;
+  }
+}
+
+@media (max-width : 404px){
+  input[type=text]{
+    width: 375px;
+    font-size: 1.6rem;
+  }
+
+  .marketCapNumber{
+    font-size: 4.5rem;
+  }
 }
