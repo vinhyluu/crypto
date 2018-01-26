@@ -137,7 +137,7 @@ class SearchForm extends React.Component{
                             <form action="" onSubmit={this.handleSubmit} className="searchForm">
                                 <div className="leftCoin">
                                     <label htmlFor="crySearch"></label>
-                                    <input type="text" id="enteredCoinLeft" name="enteredLeft" onChange={this.handleChange} className="searchInput" placeholder="Search for crypto coin information here" />
+                                    <input type="text" id="enteredCoinLeft" name="enteredLeft" onChange={this.handleChange} className="searchInput" placeholder="Search for crypto coin information here" autocomplete="off" />
                                     <button type="submit" className="magnify"><span className="sr-only">Magnifying glass that's also a search button</span><i className="fa fa-search" aria-hidden="true"></i></button>
                                 </div>                  
                             </form>
