@@ -13,6 +13,7 @@ class SearchForm extends React.Component{
             cryImage: [],
             coinTitle: [],
             marketCap: "",
+            percentChange: "",
         }
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -39,6 +40,9 @@ class SearchForm extends React.Component{
             .then(res => {
                 const cryptos = res.data;
                 const price = []
+                const percentChange = []
+
+                console.log(cryptos);
 
                 for(let title in cryptos){
                     const cryptoTitle = cryptos[title].name.toUpperCase();
@@ -46,11 +50,12 @@ class SearchForm extends React.Component{
                     
                     if(cryptoTitle === param || cryptoSymbol === param){
                         price.push(cryptos[title].price_usd);       
+                        percentChange.push(cryptos[title].percent_change_24h);
                     }
                 }
-
                 this.setState({
-                    priceResults: price
+                    priceResults: price,
+                    percentChange 
                 })
                 //function that will check if an array has any value. if yes don't do anything, if no do something
                 function isEmpty(obj) {
@@ -117,47 +122,57 @@ class SearchForm extends React.Component{
     render(){
         return(
             <div>
-                <div>
-                    <header>
-                        <h1>CryptoAnalyze</h1>
-                    </header>
-
-                    <div className="marketCapContainer">
-                        <h2>Total Market Cap</h2>
-                        <span className="marketCapNumber"><NumberFormat value={this.state.marketCap} displayType={"text"} decimalScale={2} thousandSeparator={true} prefix={"$"} /></span>
-                    </div>
-
-                    <div className="formContainer">
-                        <form action="" onSubmit={this.handleSubmit}>
-                            <div className="leftCoin">
-                                <label htmlFor="crySearch"></label>
-                                <input type="text" id="enteredCoinLeft" name="enteredLeft" onChange={this.handleChange} />
+                <div className="wrapper">
+                    <div className="wrapper2">
+                        <header>
+                            <h1 className="mainTitle">CryptoAnalyze</h1>
+                            <div className="marketCapContainer">
+                                <h2>Total Market Cap</h2>
+                                <span className="marketCapNumber"><NumberFormat value={this.state.marketCap} displayType={"text"} decimalScale={2} thousandSeparator={true} prefix={"$"} /></span>
                             </div>
-                            {/* <div className="rightCoin">
-                                <label htmlFor="crySearch"></label>
-                                <input type="text" result={this.props.search} id="enteredRight" name="enteredRight" onChange={e => this.handleChange(e.target.value)} value={this.state.formValues[name]} />
-                            </div> */}
-                            <div className="searchButton">
-                                <button type="submit">Submit</button>
-                            </div>
-                        </form>
-                    </div>
-                    
-                    {/* put this into a component using props and then have another propped component that will render the image */}
+                        </header>
 
-                    {Object.keys(this.state.priceResults).map((key) => (
-                        <div className="cryptoContainer">
-                            <span className="title">{this.state.coinTitle}</span>
-                            <span className="price"><NumberFormat value={this.state.priceResults[key]} displayType={"text"} decimalScale={2} thousandSeparator={true} prefix={"$"}/> </span>
-                            <div>
-                                <img src={`https://www.cryptocompare.com/${this.state.cryImage}`} />
-                            </div>
+                        <div className="formContainer">
+                            <form action="" onSubmit={this.handleSubmit} className="searchForm">
+                                <div className="leftCoin">
+                                    <label htmlFor="crySearch"></label>
+                                    <input type="text" id="enteredCoinLeft" name="enteredLeft" onChange={this.handleChange} className="searchInput" />
+                                    <button type="submit" className="magnify"><span className="sr-only">Magnifying glass that's also a search button</span><i className="fa fa-search" aria-hidden="true"></i></button>
+                                </div>                  
+                            </form>
                         </div>
-                    ))}
+                    </div>
                 </div>
-            </div>
-        )
+                    
+                
+                    <div className="wrapper2">  
+                        {Object.keys(this.state.priceResults).map((key) => (
+                            <div className="cryptoContainer">
+                                <div className="coinImage coinColumn">
+                                    <h3>Symbol</h3> 
+                                    <img src={`https://www.cryptocompare.com/${this.state.cryImage}`} />
+                                </div>
+
+                                <div className="coinColumn">
+                                    <h3>Coin</h3>
+                                    <span className="title">{this.state.coinTitle}</span>
+                                </div>
+
+                                <div className="coinColumn">    
+                                    <h3>Price</h3>
+                                    <span className="price"><NumberFormat value={this.state.priceResults[key]} displayType={"text"} decimalScale={2} thousandSeparator={true} prefix={"$"} /></span>
+                                </div>
+
+                                <div className="coinColumn">
+                                    <h3>% Change (24 hours)</h3>
+                                    <span>{this.state.percentChange}%</span>  
+                                </div>      
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            )
+        }
     }
-}
 
 export default SearchForm;

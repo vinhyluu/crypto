@@ -6,18 +6,96 @@ body {
   background: #f1f1f1;
 }
 
+html{
+  font-size: 62.5%;
+}
+
+.wrapper{
+  background: rgb(23, 99, 174);
+  width: 100%;
+}
+
+.wrapper2{
+  margin: 0 auto;
+  width: 75%;
+}
+
 .cryptoContainer {
   background:white;
-  width: 70%;
-  margin: 0 auto 4px auto;
-  padding: 1em;
-  box-shadow: 1px 1px 0 lightgrey;
+  margin: 60px auto 0 auto;
+  width: 50%;
+  display: flex;
+  justify-content: space-between;
+  box-shadow: 1px;
+}
+
+.coinColumn{
+  width: 25%;
+  text-align: center;
+}
+
+.coinColumn h3{
+  padding: 20px 0 20px 0;
 }
 
 .price {
   font-weight: bold;
 }
 
-.price {
-  float:right;
+header{
+  padding: 30px 0 30px 0;
+}
+
+.mainTitle{
+  margin: 0;
+  color: white;
+}
+
+.marketCapContainer{
+  color: white;
+  text-align: center;
+  padding: 70px 0 70px 0;
+}
+
+.marketCapContainer h2{
+  font-size: 4rem;
+  font-weight: lighter;
+}
+
+.marketCapNumber{
+  font-size: 8rem;
+}
+
+.searchForm{
+  display: flex;
+  justify-content: center;
+  position: relative;
+  top: 30px;
+}
+
+input[type=text]{
+  width: 450px;
+  height: 60px;
+  border: 1px solid white;
+  border-radius: 25px;
+  outline: none;
+  font-size: 2rem;
+  padding-left: 15px;
+}
+
+.leftCoin{
+  position: relative;
+}
+
+.magnify{
+    border: 0;
+    background: white;
+    font-size: 3.5rem;
+    position: absolute;
+    right: 10px;
+    top: 8px;
+}
+
+.coinImage img{
+  width: 100px;
 }
