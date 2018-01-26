@@ -23,23 +23,34 @@ html{
 .cryptoContainer {
   background:white;
   margin: 60px auto 0 auto;
-  width: 50%;
+  width: 65%;
   display: flex;
   justify-content: space-between;
-  box-shadow: 1px;
+  box-shadow: 0 10px 6px -6px #777;
 }
 
 .coinColumn{
   width: 25%;
   text-align: center;
+  position: relative;
+  padding-bottom: 55px;
 }
 
 .coinColumn h3{
   padding: 20px 0 20px 0;
+  background: rgb(214, 235, 238);
+  margin: 0;
+  color: rgb(147, 146, 146);
 }
 
-.price {
-  font-weight: bold;
+.coinContent{
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.coinText{
+  font-size: 1.5rem;
 }
 
 header{
@@ -49,6 +60,7 @@ header{
 .mainTitle{
   margin: 0;
   color: white;
+  font-size: 2.5rem;
 }
 
 .marketCapContainer{
@@ -80,7 +92,7 @@ input[type=text]{
   border-radius: 25px;
   outline: none;
   font-size: 2rem;
-  padding-left: 15px;
+  padding-left: 35px;
 }
 
 .leftCoin{
@@ -98,4 +110,8 @@ input[type=text]{
 
 .coinImage img{
   width: 100px;
+}
+
+.dot{
+  color: red;
 }

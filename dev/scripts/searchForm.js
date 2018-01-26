@@ -125,10 +125,11 @@ class SearchForm extends React.Component{
                 <div className="wrapper">
                     <div className="wrapper2">
                         <header>
-                            <h1 className="mainTitle">CryptoAnalyze</h1>
+                            <h1 className="mainTitle">CryptoCoin<span className="dot">.</span></h1>
                             <div className="marketCapContainer">
                                 <h2>Total Market Cap</h2>
                                 <span className="marketCapNumber"><NumberFormat value={this.state.marketCap} displayType={"text"} decimalScale={2} thousandSeparator={true} prefix={"$"} /></span>
+
                             </div>
                         </header>
 
@@ -136,7 +137,7 @@ class SearchForm extends React.Component{
                             <form action="" onSubmit={this.handleSubmit} className="searchForm">
                                 <div className="leftCoin">
                                     <label htmlFor="crySearch"></label>
-                                    <input type="text" id="enteredCoinLeft" name="enteredLeft" onChange={this.handleChange} className="searchInput" />
+                                    <input type="text" id="enteredCoinLeft" name="enteredLeft" onChange={this.handleChange} className="searchInput" placeholder="Search for crypto coin information here" />
                                     <button type="submit" className="magnify"><span className="sr-only">Magnifying glass that's also a search button</span><i className="fa fa-search" aria-hidden="true"></i></button>
                                 </div>                  
                             </form>
@@ -150,22 +151,30 @@ class SearchForm extends React.Component{
                             <div className="cryptoContainer">
                                 <div className="coinImage coinColumn">
                                     <h3>Symbol</h3> 
-                                    <img src={`https://www.cryptocompare.com/${this.state.cryImage}`} />
+                                    <div className="coinContent">
+                                        <img src={`https://www.cryptocompare.com/${this.state.cryImage}`} />
+                                    </div>
                                 </div>
 
                                 <div className="coinColumn">
                                     <h3>Coin</h3>
-                                    <span className="title">{this.state.coinTitle}</span>
+                                    <div className="coinContent">
+                                        <span className="coinText">{this.state.coinTitle}</span>
+                                    </div>
                                 </div>
 
                                 <div className="coinColumn">    
                                     <h3>Price</h3>
-                                    <span className="price"><NumberFormat value={this.state.priceResults[key]} displayType={"text"} decimalScale={2} thousandSeparator={true} prefix={"$"} /></span>
+                                    <div className="coinContent">
+                                        <span className="coinText"><NumberFormat value={this.state.priceResults[key]} displayType={"text"} decimalScale={2} thousandSeparator={true} prefix={"$"} /></span>
+                                    </div>
                                 </div>
 
                                 <div className="coinColumn">
                                     <h3>% Change (24 hours)</h3>
-                                    <span>{this.state.percentChange}%</span>  
+                                    <div className="coinContent">
+                                        <span className="coinText">{this.state.percentChange}%</span> 
+                                    </div> 
                                 </div>      
                             </div>
                         ))}
