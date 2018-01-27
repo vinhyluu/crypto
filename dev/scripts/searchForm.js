@@ -46,7 +46,7 @@ class SearchForm extends React.Component{
                     const cryptoTitle = cryptos[title].name.toUpperCase();
                     const cryptoSymbol = cryptos[title].symbol.toUpperCase();
                     
-                    if(cryptoTitle === param || cryptoSymbol === param){
+                    if(cryptoTitle == param || cryptoSymbol == param){
                         price.push(cryptos[title].price_usd);       
                         percentChange.push(cryptos[title].percent_change_24h);
                     }
@@ -81,7 +81,7 @@ class SearchForm extends React.Component{
 
                 for (let key in cryData) {
                     const coinImgTitle = cryData[key].CoinName.toUpperCase();
-                    if (param === key || param === coinImgTitle){
+                    if (param == key || param == coinImgTitle){
                         imageArray.push(cryData[key].ImageUrl)
                     }
                 }            
@@ -89,7 +89,7 @@ class SearchForm extends React.Component{
                 for (let key in cryData) {
                     const coinImgTitle = cryData[key].CoinName.toUpperCase();
 
-                    if (param === key || param === coinImgTitle) {
+                    if (param == key || param == coinImgTitle) {
                         coinTitle.push(cryData[key].FullName)
                     }
                 }
@@ -137,7 +137,7 @@ class SearchForm extends React.Component{
                             <form action="" onSubmit={this.handleSubmit} className="searchForm">
                                 <div className="leftCoin">
                                     <label htmlFor="crySearch"></label>
-                                    <input type="text" id="enteredCoinLeft" name="enteredLeft" onChange={this.handleChange} className="searchInput" placeholder="Search for crypto coin information here" autocomplete="off" />
+                                    <input type="text" id="enteredCoinLeft" name="enteredLeft" onChange={this.handleChange} className="searchInput" placeholder="Search for crypto coin information here" autoComplete="off" />
                                     <button type="submit" className="magnify"><span className="sr-only">Magnifying glass that's also a search button</span><i className="fa fa-search" aria-hidden="true"></i></button>
                                 </div>                  
                             </form>
