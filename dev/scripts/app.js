@@ -1,13 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import SearchForm from "./searchForm";
+import MainPage from "./mainPage";
 
 class App extends React.Component {
 
   render() {
     return (
       <div>
-        <SearchForm />
+        <MainPage />
       </div>
     )
   }
